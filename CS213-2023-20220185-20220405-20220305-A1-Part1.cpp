@@ -56,6 +56,15 @@ void saveImage () {
 
 
 void doSomethingForImage() {
+  string filterNumber ="";
+  cout << "Choose the filter you want to use";
+  cout << "1- \n" 
+          "2- \n"
+          "3- \n"
+          "4- \n"
+          "5- \n"
+          "6- \n";
+  cin >> filterNumber;
   for (int i = 0; i < SIZE; i++) {
     for (int j = 0; j< SIZE; j++) {
 

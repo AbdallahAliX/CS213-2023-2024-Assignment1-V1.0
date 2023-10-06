@@ -20,6 +20,8 @@ void saveImage();
 void flipImage(string flipType);
 void adjustDarkeningAndLightening();
 void doSomethingForImage();
+void Bw();
+void InvertImage();
 
 int main()
 {
@@ -95,29 +97,80 @@ void adjustDarkeningAndLightening(){
   }
 }
 
+
+void BW() { // function to turn image to black and white
+
+
+for (int i = 0; i < SIZE; i++) {
+
+    for (int j = 0; j< SIZE; j++) {
+
+        if(int(image[i][j]) > 127) {image[i][j] = char(255);} // if the pixel gray level is bigger than the average gray level 
+                                                              //: set the pixel to black
+
+        else {image[i][j] = char(0);} // else : set it to white
+    }
+
+  }
+
+}
+
+
+
+void InvertImage() { // function to invert an image
+
+  
+  for (int i = 0; i < SIZE; i++) {
+
+    for (int j = 0; j< SIZE; j++) {
+
+       image[i][j] = char(255 - int(image[i][j])); // subtract 255 from the pixel gray level to invert it ( if the pixel is white it will turn to black 
+                                                   //and the opposite)
+    }
+  }
+}
+
+
+
+
 void doSomethingForImage()
 {
   // Choosing the filter by number
-  string filterNumber = "";
+  int filterNumber;
   cout << "Choose the filter you want to use \n";
   cout << "1- Flip Horizontally or vertically\n"
           "2- Darken or Lighten the image\n"
-          "3- \n"
-          "4- \n"
+          "3- black and white\n"
+          "4- Invert Image \n"
           "5- \n"
           "6- \n";
 
   cin >> filterNumber;
   string flipType = "";
-  if (filterNumber == "1")
-  {
+  
+  switch(filterNumber){
+
+    case 1:
     cout << "Choose the flipType (h) or (v) \n";
     cin >> flipType;
     flipImage(flipType);
+    break;
+
+
+    case 2:
+       adjustDarkeningAndLightening();
+       break;
+
+
+    case 3:
+      BW();
+      break;
+    
+
+
+    case 4:
+      InvertImage();
+      break;
   }
-  else if (filterNumber == "2")
-  {
-    adjustDarkeningAndLightening();
-  }
-  
+
 }

@@ -18,6 +18,7 @@ unsigned char image[SIZE][SIZE];
 void loadImage();
 void saveImage();
 void flipImage(string flipType);
+void adjustDarkeningAndLightening();
 void doSomethingForImage();
 
 int main()
@@ -57,16 +58,39 @@ void saveImage()
 void flipImage(string flipType)
 {
   // Flipping image both horizontally and vertically
-  for (int i = 0; i < SIZE; i++){
-    for (int j = 0; j < SIZE / 2; j++){
-      if (flipType == "h"){
+  for (int i = 0; i < SIZE; i++)
+  {
+    for (int j = 0; j < SIZE / 2; j++)
+    {
+      if (flipType == "h")
+      {
         // Swap pixels horizontally across the middle column
         swap(image[i][j], image[i][SIZE - 1 - j]);
       }
-      else if (flipType == "v"){
+      else if (flipType == "v")
+      {
         // Swap pixels horizontally across the middle row
         swap(image[j][i], image[SIZE - 1 - j][i]);
       }
+    }
+  }
+}
+
+void adjustDarkeningAndLightening(){
+  //Brightness is a user input that if negative darkens the image while if positive lightens it with the amount that user entered
+  int Brightness;
+
+  cout << "Enter the brightness adjustment value (positive for lighten, negative for darken): ";
+  cin >> Brightness;
+
+  for (int i = 0; i < SIZE; i++){
+    for (int j = 0; j < SIZE; j++){
+      // Adjust the pixel intensity
+      int newIntensity = static_cast<int>(image[i][j]) + Brightness;
+      // Ensure the intensity stays within the valid range [0, 255]
+      newIntensity = max(0, min(255, newIntensity));
+      // Update the pixel intensity
+      image[i][j] = static_cast<unsigned char>(newIntensity);
     }
   }
 }
@@ -77,7 +101,7 @@ void doSomethingForImage()
   string filterNumber = "";
   cout << "Choose the filter you want to use \n";
   cout << "1- Flip Horizontally or vertically\n"
-          "2- \n"
+          "2- Darken or Lighten the image\n"
           "3- \n"
           "4- \n"
           "5- \n"
@@ -91,4 +115,9 @@ void doSomethingForImage()
     cin >> flipType;
     flipImage(flipType);
   }
+  else if (filterNumber == "2")
+  {
+    adjustDarkeningAndLightening();
+  }
+  
 }

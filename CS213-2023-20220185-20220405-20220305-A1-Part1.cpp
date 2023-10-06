@@ -22,6 +22,7 @@ void adjustDarkeningAndLightening();
 void doSomethingForImage();
 void BW();
 void InvertImage();
+int filterNumber;
 
 int main()
 {
@@ -46,15 +47,20 @@ void loadImage()
 
 void saveImage()
 {
-  char imageFileName[100];
+  if (filterNumber != 0)
+  {
+     char imageFileName[100];
 
-  // Get gray scale image target file name
-  cout << "Enter the target image file name: ";
-  cin >> imageFileName;
+    // Get gray scale image target file name
+    cout << "Enter the target image file name: ";
+    cin >> imageFileName;
 
-  // Add to it .bmp extension and load image
-  strcat(imageFileName, ".bmp");
-  writeGSBMP(imageFileName, image);
+    // Add to it .bmp extension and load image
+    strcat(imageFileName, ".bmp");
+    writeGSBMP(imageFileName, image);
+  }
+  
+ 
 }
 
 void flipImage(string flipType)
@@ -136,14 +142,15 @@ void InvertImage() { // function to invert an image
 void doSomethingForImage()
 {
   // Choosing the filter by number
-  int filterNumber;
+  
   cout << "Choose the filter you want to use \n";
   cout << "1- Flip Horizontally or vertically\n"
           "2- Darken or Lighten the image\n"
           "3- black and white\n"
           "4- Invert Image \n"
           "5- \n"
-          "6- \n";
+          "6- \n"
+          "0- Exit \n";
 
   cin >> filterNumber;
   string flipType = "";
@@ -171,6 +178,8 @@ void doSomethingForImage()
     case 4:
       InvertImage();
       break;
+
+
   }
 
 }

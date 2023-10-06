@@ -20,7 +20,7 @@ void saveImage();
 void flipImage(string flipType);
 void adjustDarkeningAndLightening();
 void doSomethingForImage();
-void Bw();
+void BW();
 void InvertImage();
 
 int main()
@@ -151,15 +151,15 @@ void doSomethingForImage()
   switch(filterNumber){
 
     case 1:
-    cout << "Choose the flipType (h) or (v) \n";
-    cin >> flipType;
-    flipImage(flipType);
-    break;
+      cout << "Choose the flipType (h) or (v) \n";
+      cin >> flipType;
+      flipImage(flipType);
+      break;
 
 
     case 2:
-       adjustDarkeningAndLightening();
-       break;
+      adjustDarkeningAndLightening();
+      break;
 
 
     case 3:

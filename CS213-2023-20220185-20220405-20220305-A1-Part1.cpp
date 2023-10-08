@@ -1,8 +1,8 @@
 // FCAI – OOP Programming – 2023 - Assignment 1
 // Program Name:				CS213-2023-20220185-20220405-20220305-A1.cpp
-// Author1 and ID and Group:	Abdallah Mphamed 20220185
-// Author2 and ID and Group:	Youssef Mohamed 20220405
-// Author3 and ID and Group:	Mohamed Maged 20220305
+// Author1 and ID and Email and Group:	Abdallah Mohamed / 20220185 / abdallahali0004@gmail.com
+// Author2 and ID and Email and Group:	Youssef Mohamed / 20220405 / Safottanew2@gmail.com
+// Author3 and ID and Email and Group:	Mohamed Maged / 20220305 / medomaged01000@gmail.com
 // Purpose: Adding filters to a gray scale image
 
 #include <iostream>

@@ -22,6 +22,9 @@ void adjustDarkeningAndLightening();
 void doSomethingForImage();
 void BW();
 void InvertImage();
+void mer();
+void RotateImage();
+void nineteydegree();
 int filterNumber;
 
 int main()
@@ -148,14 +151,18 @@ void doSomethingForImage()
           "2- Darken or Lighten the image\n"
           "3- black and white\n"
           "4- Invert Image \n"
-          "5- \n"
-          "6- \n"
+          "5- Merge image \n"
+          "6- Rotate image \n"
           "0- Exit \n";
 
   cin >> filterNumber;
   string flipType = "";
   
-  switch(filterNumber){
+  switch(filterNumber)
+  {
+    case 0:
+      return 0;
+      break;
 
     case 1:
       cout << "Choose the flipType (h) or (v) \n";
@@ -180,6 +187,68 @@ void doSomethingForImage()
       break;
 
 
+    case 5:
+        mer();
+        break;
+
+
+    case 6:
+        void RotateImage();
+        break;
+
   }
 
 }
+
+void mer();
+{
+    char imageFileName[100];
+
+    // Get gray scale image file name
+    cout << "Enter the source image file name: ";
+    cin >> imageFileName;
+
+    // Add to it .bmp extension and load image
+    strcat(imageFileName, ".bmp");
+    readGSBMP(imageFileName, image2);
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            image[i][j] = (image[i][j] + image2[i][j]) / 2;
+
+
+        }
+
+    }
+}
+
+void ninetydegree() {
+
+    unsigned char image3[SIZE][SIZE];
+
+    for (int i = 0; i < SIZE; i++) {
+
+        for (int j = 0; j < SIZE; j++) {
+
+            image3[i][j] = image[SIZE - 1 - j][i];
+        }
+    }
+
+    swap(image3, image);
+}
+void RotateImage() {
+
+    int rotation;
+    cout << "please enter rotation \n"
+        "1- 90 degree\n"
+        "2- 180 degree\n"
+        "3- 270 degree\n";
+
+    cin >> rotation;
+}
+
+    while (rotation--) {
+
+        ninetydegree();
+    }

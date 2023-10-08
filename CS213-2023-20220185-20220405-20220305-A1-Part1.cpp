@@ -14,6 +14,7 @@
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
+unsigned char image2[SIZE][SIZE];
 
 void loadImage();
 void saveImage();
@@ -142,8 +143,7 @@ void InvertImage() { // function to invert an image
 
 
 
-void doSomethingForImage()
-{
+void doSomethingForImage() {
   // Choosing the filter by number
   
   cout << "Choose the filter you want to use \n";
@@ -158,10 +158,9 @@ void doSomethingForImage()
   cin >> filterNumber;
   string flipType = "";
   
-  switch(filterNumber)
-  {
+  switch(filterNumber) {
+  
     case 0:
-      return 0;
       break;
 
     case 1:
@@ -181,7 +180,6 @@ void doSomethingForImage()
       break;
     
 
-
     case 4:
       InvertImage();
       break;
@@ -197,11 +195,11 @@ void doSomethingForImage()
         break;
 
   }
-
 }
 
-void mer();
-{
+
+
+void mer() {
     char imageFileName[100];
 
     // Get gray scale image file name
@@ -211,9 +209,9 @@ void mer();
     // Add to it .bmp extension and load image
     strcat(imageFileName, ".bmp");
     readGSBMP(imageFileName, image2);
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < SIZE; i++)
     {
-        for (int j = 0; j < size; j++)
+        for (int j = 0; j < SIZE ; j++)
         {
             image[i][j] = (image[i][j] + image2[i][j]) / 2;
 
@@ -237,6 +235,7 @@ void ninetydegree() {
 
     swap(image3, image);
 }
+
 void RotateImage() {
 
     int rotation;
@@ -246,9 +245,11 @@ void RotateImage() {
         "3- 270 degree\n";
 
     cin >> rotation;
-}
+
 
     while (rotation--) {
 
         ninetydegree();
     }
+    
+}

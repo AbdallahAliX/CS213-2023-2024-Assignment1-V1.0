@@ -1,7 +1,6 @@
 // FCAI – OOP Programming – 2023 - Assignment 1
 // Program Name:				CS213-2023-20220185-20220405-20220305-A1.cpp
-// Last Modification Date:	xx/xx/xxxx
-// Author1 and ID and Group:	Abdallah Ali 20220185
+// Author1 and ID and Group:	Abdallah Mphamed 20220185
 // Author2 and ID and Group:	Youssef Mohamed 20220405
 // Author3 and ID and Group:	Mohamed Maged 20220305
 // Purpose: Adding filters to a gray scale image
@@ -25,7 +24,7 @@ void BW();
 void InvertImage();
 void mer();
 void RotateImage();
-void nineteydegree();
+void ninetydegree();
 int filterNumber;
 
 int main()
@@ -140,65 +139,6 @@ void InvertImage() { // function to invert an image
   }
 }
 
-
-
-
-void doSomethingForImage() {
-  // Choosing the filter by number
-  
-  cout << "Choose the filter you want to use \n";
-  cout << "1- Flip Horizontally or vertically\n"
-          "2- Darken or Lighten the image\n"
-          "3- black and white\n"
-          "4- Invert Image \n"
-          "5- Merge image \n"
-          "6- Rotate image \n"
-          "0- Exit \n";
-
-  cin >> filterNumber;
-  string flipType = "";
-  
-  switch(filterNumber) {
-  
-    case 0:
-      break;
-
-    case 1:
-      cout << "Choose the flipType (h) or (v) \n";
-      cin >> flipType;
-      flipImage(flipType);
-      break;
-
-
-    case 2:
-      adjustDarkeningAndLightening();
-      break;
-
-
-    case 3:
-      BW();
-      break;
-    
-
-    case 4:
-      InvertImage();
-      break;
-
-
-    case 5:
-        mer();
-        break;
-
-
-    case 6:
-        void RotateImage();
-        break;
-
-  }
-}
-
-
-
 void mer() {
     char imageFileName[100];
 
@@ -253,3 +193,59 @@ void RotateImage() {
     }
     
 }
+
+
+
+void doSomethingForImage() {
+  // Choosing the filter by number
+  
+  cout << "Choose the filter you want to use \n";
+  cout << "1- Flip Horizontally or vertically\n"
+          "2- Darken or Lighten the image\n"
+          "3- black and white\n"
+          "4- Invert Image \n"
+          "5- Merge image \n"
+          "6- Rotate image \n"
+          "0- Exit \n";
+
+  cin >> filterNumber;
+  string flipType = "";
+  
+  switch(filterNumber) {
+  
+    case 1:
+      cout << "Choose the flipType (h) or (v) \n";
+      cin >> flipType;
+      flipImage(flipType);
+      break;
+
+
+    case 2:
+      adjustDarkeningAndLightening();
+      break;
+
+
+    case 3:
+      BW();
+      break;
+    
+
+    case 4:
+      InvertImage();
+      break;
+
+
+    case 5:
+        mer();
+        break;
+
+
+    case 6:
+        RotateImage();
+        break;
+
+  }
+}
+
+
+

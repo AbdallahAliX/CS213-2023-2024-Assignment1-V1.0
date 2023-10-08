@@ -1,6 +1,7 @@
 // FCAI – OOP Programming – 2023 - Assignment 1
 // Program Name:				CS213-2023-20220185-20220405-20220305-A1.cpp
-// Author1 and ID and Group:	Abdallah Mohamed 20220185
+// Last Modification Date:	xx/xx/xxxx
+// Author1 and ID and Group:	Abdallah Ali 20220185
 // Author2 and ID and Group:	Youssef Mohamed 20220405
 // Author3 and ID and Group:	Mohamed Maged 20220305
 // Purpose: Adding filters to a gray scale image
@@ -142,14 +143,9 @@ void InvertImage() { // function to invert an image
 
 
 
-<<<<<<< HEAD
-void doSomethingForImage()
-{
-
-=======
 void doSomethingForImage() {
->>>>>>> 1070c0104724fb141fb3ab90115ace3ac87d3931
   // Choosing the filter by number
+  
   cout << "Choose the filter you want to use \n";
   cout << "1- Flip Horizontally or vertically\n"
           "2- Darken or Lighten the image\n"
@@ -187,15 +183,11 @@ void doSomethingForImage() {
     case 4:
       InvertImage();
       break;
-<<<<<<< HEAD
-  }
-=======
 
 
     case 5:
         mer();
         break;
->>>>>>> 1070c0104724fb141fb3ab90115ace3ac87d3931
 
 
     case 6:

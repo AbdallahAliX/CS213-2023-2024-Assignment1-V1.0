@@ -25,6 +25,7 @@ void InvertImage();
 void mer();
 void RotateImage();
 void ninetydegree();
+void enlargeQuarter(int x, int y, int newSIZE);
 int filterNumber;
 
 int main()
@@ -194,6 +195,51 @@ void RotateImage() {
     
 }
 
+void enlargeQuarter(int x, int y, int newSIZE) {
+    unsigned char enlargedQuarter[SIZE][SIZE];
+
+    // Calculate scaling factor
+    int scale = SIZE / newSIZE;
+
+    // Iterate over each pixel in the new image
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            // Calculate corresponding position in the original quarter
+            int quarterI = i / scale;
+            int quarterJ = j / scale;
+
+            // Copy pixel values from the chosen quarter to the new image
+            enlargedQuarter[i][j] = image[x + quarterI][y + quarterJ];
+        }
+    }
+
+    // Copy the enlarged quarter to the original image
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            image[i][j] = enlargedQuarter[i][j];
+        }
+    }
+}
+
+void chooseQuarter(){
+        // Enlarge one of the four quarters into a new image
+        int quarter;
+        cout << "Choose a quarter to enlarge (1, 2, 3, or 4): ";
+        cin >> quarter;
+
+        // Enlarge the specified quarter into a new image
+        if (quarter == 1) {
+            enlargeQuarter(0, 0, SIZE / 2);
+        } else if (quarter == 2) {
+            enlargeQuarter(0, SIZE / 2, SIZE / 2);
+        } else if (quarter == 3) {
+            enlargeQuarter(SIZE / 2, 0, SIZE / 2);
+        } else if (quarter == 4) {
+            enlargeQuarter(SIZE / 2, SIZE / 2, SIZE / 2);
+        } else {
+            cout << "Invalid quarter choice.\n";
+        }
+}
 
 
 void doSomethingForImage() {
@@ -206,6 +252,7 @@ void doSomethingForImage() {
           "4- Invert Image \n"
           "5- Merge image \n"
           "6- Rotate image \n"
+          "7- Enlarge quarter \n"
           "0- Exit \n";
 
   cin >> filterNumber;
@@ -236,14 +283,17 @@ void doSomethingForImage() {
 
 
     case 5:
-        mer();
-        break;
+      mer();
+      break;
 
 
     case 6:
-        RotateImage();
-        break;
+      RotateImage();
+      break;
 
+    case 7:
+      chooseQuarter();
+      break;
   }
 }
 

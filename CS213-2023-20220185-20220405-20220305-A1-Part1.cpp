@@ -6,6 +6,7 @@
 // Purpose: Adding filters to a gray scale image
 
 #include <iostream>
+#include <algorithm>
 #include <fstream>
 #include <cstring>
 #include <cmath>
@@ -26,6 +27,7 @@ void mer();
 void RotateImage();
 void ninetydegree();
 void enlargeQuarter(int x, int y, int newSIZE);
+void shuffleQuarters();
 int filterNumber;
 
 int main()
@@ -241,6 +243,55 @@ void chooseQuarter(){
         }
 }
 
+void shuffleQuarters() {
+    // Quarters order based on user input
+    int order[] = {0, 0, 0, 0};
+
+    // Get user input for quarter order
+    cout << "Enter the order of quarters (1, 2, 3, 4): ";
+    for (int i = 0; i < 4; ++i) {
+        cin >> order[i];
+    }
+
+    // Validate user input
+    bool validOrder = true;
+    for (int i = 1; i <= 4; ++i) {
+        if (find(begin(order), end(order), i) == end(order)) {
+            cout << "Invalid order. Please enter each quarter number exactly once.\n";
+            validOrder = false;
+            break;
+        }
+    }
+
+    if (!validOrder) {
+        return;
+    }
+
+    // Create a copy of the original image for shuffling
+    unsigned char shuffledImage[SIZE][SIZE];
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            shuffledImage[i][j] = image[i][j];
+        }
+    }
+
+    // Shuffle the quarters based on user input
+    for (int i = 0; i < 4; ++i) {
+        int newRow = i / 2;
+        int newCol = i % 2;
+
+        int originalRow = (order[i] - 1) / 2;
+        int originalCol = (order[i] - 1) % 2;
+
+        for (int x = 0; x < SIZE / 2; ++x) {
+            for (int y = 0; y < SIZE / 2; ++y) {
+                image[newRow * (SIZE / 2) + x][newCol * (SIZE / 2) + y] = shuffledImage[originalRow * (SIZE / 2) + x][originalCol * (SIZE / 2) + y];
+            }
+        }
+    }
+}
+
+
 
 void doSomethingForImage() {
   // Choosing the filter by number
@@ -253,6 +304,7 @@ void doSomethingForImage() {
           "5- Merge image \n"
           "6- Rotate image \n"
           "7- Enlarge quarter \n"
+          "8- Shuffle \n"
           "0- Exit \n";
 
   cin >> filterNumber;
@@ -293,6 +345,10 @@ void doSomethingForImage() {
 
     case 7:
       chooseQuarter();
+      break;
+
+    case 8:
+      shuffleQuarters();
       break;
   }
 }

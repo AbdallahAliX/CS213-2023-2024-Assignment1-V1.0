@@ -1,8 +1,23 @@
 // FCAI – OOP Programming – 2023 - Assignment 1
-// Program Name:				CS213-2023-20220185-20220405-20220305-A1.cpp
-// Author1 and ID and Email and Group:	Abdallah Mohamed / 20220185 / abdallahali0004@gmail.com
-// Author2 and ID and Email and Group:	Youssef Mohamed / 20220405 / Safottanew2@gmail.com
-// Author3 and ID and Email and Group:	Mohamed Maged / 20220305 / medomaged01000@gmail.com
+// Program Name: CS213-2023-20220185-20220405-20220305-A1.cpp
+// Author 1:
+	//Name: Abdallah Mohamed
+  //ID: 20220185 
+  //Email: abdallahali0004@gmail.com
+  //Group: S5
+  //Filters: (4-FlipImage, 6-Darken and Lighten Image, 8-Enlarge Image, b-Shuffle Image, e-Skew Image Horizontally)
+// Author 2:
+	//Name: Youssef Mohamed
+  //ID: 20220405
+  //Email: Safottanew2@gmail.com
+  //Group: S5
+  //Filters: (1-Black and White, 2-InvertImage, 9-Shrink Image, f-Skew Image Vertically, c-Blur Image)
+// Author 3:
+	//Name: Mohamed Maged
+  //ID: 20220305
+  //Email: medomaged01000@gmail.com
+  //Group: S5
+  //Filters: (3-Merge, 5-RotateImage, 7-Detect Image Edges, a-Mirror Image, d-CropImage)
 // Purpose: Adding filters to a gray scale image
 
 #include <iostream>
@@ -18,7 +33,7 @@ unsigned char image[SIZE][SIZE];
 
 void loadImage (unsigned char image[SIZE][SIZE]);
 void saveImage (unsigned char image[SIZE][SIZE]);
-void flipImage(string flipType);
+void flipImage();
 void adjustDarkeningAndLightening();
 void doSomethingForImage();
 void BW();
@@ -27,8 +42,8 @@ void Merge();
 void RotateImage();
 void ninetydegree();
 void enlargeQuarter(int x, int y, int newSIZE);
+void chooseQuarter();
 void shuffleQuarters();
-void skewRight();
 void skewImageHorizontally();
 void SkewVertically();
 void detect_edge();
@@ -95,7 +110,7 @@ void doSomethingForImage() {
           "d- CropImage \n"
           "e- Skew Image Horizontally\n"
           "f- Skew Image Vertically\n"
-          "0- Exit \n";
+          "0- Save your image \n";
 
 
   char filterNumber; cin >> filterNumber;
@@ -104,6 +119,10 @@ void doSomethingForImage() {
   switch (filterNumber) {
 
   default:
+    cout << "Invalid filter input. Please try again.\n";
+    break;
+
+  case '0':
     state = false;
     break;
 
@@ -120,9 +139,8 @@ void doSomethingForImage() {
     break;
 
   case '4':
-    cout << "Choose the flipType (h) or (v) \n";
-    cin >> flipType;
-    flipImage(flipType);
+
+    flipImage();
     break;
 
 
@@ -139,7 +157,7 @@ void doSomethingForImage() {
     break;
 
   case '8':
-    enlargeQuarter(10 , 20 , 30);
+    chooseQuarter();
     break;
 
   case '9':
@@ -229,8 +247,11 @@ void Merge(){
 }
 
 
-void flipImage(string flipType) {
+void flipImage() {
   // Flipping image both horizontally and vertically
+  string flipType;
+  cout << "Choose the flipType (h) or (v) \n";
+  cin >> flipType;
   for (int i = 0; i < SIZE; i++)
   {
     for (int j = 0; j < SIZE / 2; j++)
@@ -507,7 +528,7 @@ void shuffleQuarters() {
   int order[] = {0, 0, 0, 0};
 
   // Get user input for quarter order
-  cout << "Enter the order of quarters (1, 2, 3, 4): ";
+  cout << "Enter the order of quarters (Ex: 1 2 3 4): ";
   for (int i = 0; i < 4; ++i)
   {
     cin >> order[i];
@@ -596,7 +617,14 @@ double kernal_value = 1.0 / (kernal_size * kernal_size); // the value of each el
 
   }
  }
-   saveImage(blurred_matrix);
+   for (int i = 0; i < SIZE; ++i)
+  {
+    for (int j = 0; j < SIZE; ++j)
+    {
+      image[i][j] = blurred_matrix[i][j];
+    }
+  }
+
 }
 
 

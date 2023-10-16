@@ -28,6 +28,8 @@ void RotateImage();
 void ninetydegree();
 void enlargeQuarter(int x, int y, int newSIZE);
 void shuffleQuarters();
+void skewRight();
+void skewImageHorizontally();
 int filterNumber;
 
 int main()
@@ -55,7 +57,7 @@ void saveImage()
 {
   if (filterNumber != 0)
   {
-     char imageFileName[100];
+    char imageFileName[100];
 
     // Get gray scale image target file name
     cout << "Enter the target image file name: ";
@@ -65,8 +67,6 @@ void saveImage()
     strcat(imageFileName, ".bmp");
     writeGSBMP(imageFileName, image);
   }
-  
- 
 }
 
 void flipImage(string flipType)
@@ -90,15 +90,18 @@ void flipImage(string flipType)
   }
 }
 
-void adjustDarkeningAndLightening(){
-  //Brightness is a user input that if negative darkens the image while if positive lightens it with the amount that user entered
+void adjustDarkeningAndLightening()
+{
+  // Brightness is a user input that if negative darkens the image while if positive lightens it with the amount that user entered
   int Brightness;
 
   cout << "Enter the brightness adjustment value (positive for lighten, negative for darken): ";
   cin >> Brightness;
 
-  for (int i = 0; i < SIZE; i++){
-    for (int j = 0; j < SIZE; j++){
+  for (int i = 0; i < SIZE; i++)
+  {
+    for (int j = 0; j < SIZE; j++)
+    {
       // Adjust the pixel intensity
       int newIntensity = static_cast<int>(image[i][j]) + Brightness;
       // Ensure the intensity stays within the valid range [0, 255]
@@ -109,193 +112,285 @@ void adjustDarkeningAndLightening(){
   }
 }
 
+void BW()
+{ // function to turn image to black and white
 
-void BW() { // function to turn image to black and white
+  for (int i = 0; i < SIZE; i++)
+  {
 
-
-for (int i = 0; i < SIZE; i++) {
-
-    for (int j = 0; j< SIZE; j++) {
-
-        if(int(image[i][j]) > 127) {image[i][j] = char(255);} // if the pixel gray level is bigger than the average gray level 
-                                                              //: set the pixel to black
-
-        else {image[i][j] = char(0);} // else : set it to white
-    }
-
-  }
-
-}
-
-
-
-void InvertImage() { // function to invert an image
-
-  
-  for (int i = 0; i < SIZE; i++) {
-
-    for (int j = 0; j< SIZE; j++) {
-
-       image[i][j] = char(255 - int(image[i][j])); // subtract 255 from the pixel gray level to invert it ( if the pixel is white it will turn to black 
-                                                   //and the opposite)
-    }
-  }
-}
-
-void mer() {
-    char imageFileName[100];
-
-    // Get gray scale image file name
-    cout << "Enter the source image file name: ";
-    cin >> imageFileName;
-
-    // Add to it .bmp extension and load image
-    strcat(imageFileName, ".bmp");
-    readGSBMP(imageFileName, image2);
-    for (int i = 0; i < SIZE; i++)
+    for (int j = 0; j < SIZE; j++)
     {
-        for (int j = 0; j < SIZE ; j++)
-        {
-            image[i][j] = (image[i][j] + image2[i][j]) / 2;
 
+      if (int(image[i][j]) > 127)
+      {
+        image[i][j] = char(255);
+      } // if the pixel gray level is bigger than the average gray level
+        //: set the pixel to black
 
-        }
-
+      else
+      {
+        image[i][j] = char(0);
+      } // else : set it to white
     }
+  }
 }
 
-void ninetydegree() {
+void InvertImage()
+{ // function to invert an image
 
-    unsigned char image3[SIZE][SIZE];
+  for (int i = 0; i < SIZE; i++)
+  {
 
-    for (int i = 0; i < SIZE; i++) {
+    for (int j = 0; j < SIZE; j++)
+    {
 
-        for (int j = 0; j < SIZE; j++) {
-
-            image3[i][j] = image[SIZE - 1 - j][i];
-        }
+      image[i][j] = char(255 - int(image[i][j])); // subtract 255 from the pixel gray level to invert it ( if the pixel is white it will turn to black
+                                                  // and the opposite)
     }
-
-    swap(image3, image);
+  }
 }
 
-void RotateImage() {
+void mer()
+{
+  char imageFileName[100];
 
-    int rotation;
-    cout << "please enter rotation \n"
-        "1- 90 degree\n"
-        "2- 180 degree\n"
-        "3- 270 degree\n";
+  // Get gray scale image file name
+  cout << "Enter the source image file name: ";
+  cin >> imageFileName;
 
-    cin >> rotation;
-
-
-    while (rotation--) {
-
-        ninetydegree();
+  // Add to it .bmp extension and load image
+  strcat(imageFileName, ".bmp");
+  readGSBMP(imageFileName, image2);
+  for (int i = 0; i < SIZE; i++)
+  {
+    for (int j = 0; j < SIZE; j++)
+    {
+      image[i][j] = (image[i][j] + image2[i][j]) / 2;
     }
-    
+  }
 }
 
-void enlargeQuarter(int x, int y, int newSIZE) {
-    unsigned char enlargedQuarter[SIZE][SIZE];
+void ninetydegree()
+{
 
-    // Calculate scaling factor
-    int scale = SIZE / newSIZE;
+  unsigned char image3[SIZE][SIZE];
 
-    // Iterate over each pixel in the new image
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            // Calculate corresponding position in the original quarter
-            int quarterI = i / scale;
-            int quarterJ = j / scale;
+  for (int i = 0; i < SIZE; i++)
+  {
 
-            // Copy pixel values from the chosen quarter to the new image
-            enlargedQuarter[i][j] = image[x + quarterI][y + quarterJ];
-        }
+    for (int j = 0; j < SIZE; j++)
+    {
+
+      image3[i][j] = image[SIZE - 1 - j][i];
     }
+  }
 
-    // Copy the enlarged quarter to the original image
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            image[i][j] = enlargedQuarter[i][j];
-        }
-    }
+  swap(image3, image);
 }
 
-void chooseQuarter(){
-        // Enlarge one of the four quarters into a new image
-        int quarter;
-        cout << "Choose a quarter to enlarge (1, 2, 3, or 4): ";
-        cin >> quarter;
+void RotateImage()
+{
 
-        // Enlarge the specified quarter into a new image
-        if (quarter == 1) {
-            enlargeQuarter(0, 0, SIZE / 2);
-        } else if (quarter == 2) {
-            enlargeQuarter(0, SIZE / 2, SIZE / 2);
-        } else if (quarter == 3) {
-            enlargeQuarter(SIZE / 2, 0, SIZE / 2);
-        } else if (quarter == 4) {
-            enlargeQuarter(SIZE / 2, SIZE / 2, SIZE / 2);
-        } else {
-            cout << "Invalid quarter choice.\n";
-        }
+  int rotation;
+  cout << "please enter rotation \n"
+          "1- 90 degree\n"
+          "2- 180 degree\n"
+          "3- 270 degree\n";
+
+  cin >> rotation;
+
+  while (rotation--)
+  {
+
+    ninetydegree();
+  }
 }
 
-void shuffleQuarters() {
-    // Quarters order based on user input
-    int order[] = {0, 0, 0, 0};
+void enlargeQuarter(int x, int y, int newSIZE)
+{
+  unsigned char enlargedQuarter[SIZE][SIZE];
 
-    // Get user input for quarter order
-    cout << "Enter the order of quarters (1, 2, 3, 4): ";
-    for (int i = 0; i < 4; ++i) {
-        cin >> order[i];
+  // Calculate scaling factor
+  int scale = SIZE / newSIZE;
+
+  // Iterate over each pixel in the new image
+  for (int i = 0; i < SIZE; i++)
+  {
+    for (int j = 0; j < SIZE; j++)
+    {
+      // Calculate corresponding position in the original quarter
+      int quarterI = i / scale;
+      int quarterJ = j / scale;
+
+      // Copy pixel values from the chosen quarter to the new image
+      enlargedQuarter[i][j] = image[x + quarterI][y + quarterJ];
     }
+  }
 
-    // Validate user input
-    bool validOrder = true;
-    for (int i = 1; i <= 4; ++i) {
-        if (find(begin(order), end(order), i) == end(order)) {
-            cout << "Invalid order. Please enter each quarter number exactly once.\n";
-            validOrder = false;
-            break;
-        }
+  // Copy the enlarged quarter to the original image
+  for (int i = 0; i < SIZE; i++)
+  {
+    for (int j = 0; j < SIZE; j++)
+    {
+      image[i][j] = enlargedQuarter[i][j];
     }
-
-    if (!validOrder) {
-        return;
-    }
-
-    // Create a copy of the original image for shuffling
-    unsigned char shuffledImage[SIZE][SIZE];
-    for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j < SIZE; ++j) {
-            shuffledImage[i][j] = image[i][j];
-        }
-    }
-
-    // Shuffle the quarters based on user input
-    for (int i = 0; i < 4; ++i) {
-        int newRow = i / 2;
-        int newCol = i % 2;
-
-        int originalRow = (order[i] - 1) / 2;
-        int originalCol = (order[i] - 1) % 2;
-
-        for (int x = 0; x < SIZE / 2; ++x) {
-            for (int y = 0; y < SIZE / 2; ++y) {
-                image[newRow * (SIZE / 2) + x][newCol * (SIZE / 2) + y] = shuffledImage[originalRow * (SIZE / 2) + x][originalCol * (SIZE / 2) + y];
-            }
-        }
-    }
+  }
 }
 
+void chooseQuarter()
+{
+  // Enlarge one of the four quarters into a new image
+  int quarter;
+  cout << "Choose a quarter to enlarge (1, 2, 3, or 4): ";
+  cin >> quarter;
 
+  // Enlarge the specified quarter into a new image
+  if (quarter == 1)
+  {
+    enlargeQuarter(0, 0, SIZE / 2);
+  }
+  else if (quarter == 2)
+  {
+    enlargeQuarter(0, SIZE / 2, SIZE / 2);
+  }
+  else if (quarter == 3)
+  {
+    enlargeQuarter(SIZE / 2, 0, SIZE / 2);
+  }
+  else if (quarter == 4)
+  {
+    enlargeQuarter(SIZE / 2, SIZE / 2, SIZE / 2);
+  }
+  else
+  {
+    cout << "Invalid quarter choice.\n";
+  }
+}
 
-void doSomethingForImage() {
+void shuffleQuarters()
+{
+  // Quarters order based on user input
+  int order[] = {0, 0, 0, 0};
+
+  // Get user input for quarter order
+  cout << "Enter the order of quarters (1, 2, 3, 4): ";
+  for (int i = 0; i < 4; ++i)
+  {
+    cin >> order[i];
+  }
+
+  // Validate user input
+  bool validOrder = true;
+  for (int i = 1; i <= 4; ++i)
+  {
+    if (find(begin(order), end(order), i) == end(order))
+    {
+      cout << "Invalid order. Please enter each quarter number exactly once.\n";
+      validOrder = false;
+      break;
+    }
+  }
+
+  if (!validOrder)
+  {
+    return;
+  }
+
+  // Create a copy of the original image for shuffling
+  unsigned char shuffledImage[SIZE][SIZE];
+  for (int i = 0; i < SIZE; ++i)
+  {
+    for (int j = 0; j < SIZE; ++j)
+    {
+      shuffledImage[i][j] = image[i][j];
+    }
+  }
+
+  // Shuffle the quarters based on user input
+  for (int i = 0; i < 4; ++i)
+  {
+    int newRow = i / 2;
+    int newCol = i % 2;
+
+    int originalRow = (order[i] - 1) / 2;
+    int originalCol = (order[i] - 1) % 2;
+
+    for (int x = 0; x < SIZE / 2; ++x)
+    {
+      for (int y = 0; y < SIZE / 2; ++y)
+      {
+        image[newRow * (SIZE / 2) + x][newCol * (SIZE / 2) + y] = shuffledImage[originalRow * (SIZE / 2) + x][originalCol * (SIZE / 2) + y];
+      }
+    }
+  }
+}
+
+void skewImageHorizontally()
+{
+
+  unsigned char shrunkImage[SIZE][SIZE];
+
+  double angle;
+  cout << "Enter the angle: ";
+  cin >> angle;
+  angle = (angle * 22) / (180 * 7);
+  double scaleFactor = (1 + (1 / tan(angle)));
+
+  // Calculate the dimensions of the shrunk image
+  int newWidth = SIZE / scaleFactor;
+  for (int i = 0; i < SIZE; i++)
+    for (int j = 0; j < SIZE; j++)
+      shrunkImage[i][j] = 255;
+
+  // Iterate over each pixel in the shrunk image
+  for (int i = 0; i < SIZE; ++i)
+  {
+    for (int j = 0; j < newWidth; ++j)
+    {
+      // Calculate the corresponding position in the original image
+      int originalJ = j * scaleFactor;
+
+      // Copy pixel values from the original image to the shrunk image
+      shrunkImage[i][j] = image[i][originalJ];
+    }
+  }
+
+  // Copy the shrunk image to the original image
+  for (int i = 0; i < SIZE; ++i)
+  {
+    for (int j = 0; j < SIZE; ++j)
+    {
+      image[i][j] = shrunkImage[i][j];
+    }
+  }
+
+  double mov = SIZE - (SIZE / scaleFactor); // calculate the number of pixels to move
+  double step = mov / SIZE; // calculate the step to move each pixel
+  unsigned char img_in[SIZE][SIZE + (int)mov]; 
+  for (int i = 0; i < SIZE; i++)
+    for (int j = 0; j < SIZE; j++)
+      img_in[i][j] = 255;
+  for (int i = 0; i < SIZE; i++)
+  {
+    for (int j = 0; j < SIZE; j++)
+    {
+      img_in[i][j + (int)mov] = image[i][j]; 
+    }
+    mov -= step;
+  }
+  for (int i = 0; i < SIZE; i++)
+  {
+    for (int j = 0; j < SIZE; j++)
+    {
+      image[i][j] = img_in[i][j]; // copy the image to the original image
+    }
+  }
+}
+
+void doSomethingForImage()
+{
   // Choosing the filter by number
-  
+
   cout << "Choose the filter you want to use \n";
   cout << "1- Flip Horizontally or vertically\n"
           "2- Darken or Lighten the image\n"
@@ -305,53 +400,51 @@ void doSomethingForImage() {
           "6- Rotate image \n"
           "7- Enlarge quarter \n"
           "8- Shuffle \n"
+          "9- Skew horizontally \n"
           "0- Exit \n";
 
   cin >> filterNumber;
   string flipType = "";
-  
-  switch(filterNumber) {
-  
-    case 1:
-      cout << "Choose the flipType (h) or (v) \n";
-      cin >> flipType;
-      flipImage(flipType);
-      break;
 
+  switch (filterNumber)
+  {
 
-    case 2:
-      adjustDarkeningAndLightening();
-      break;
+  case 1:
+    cout << "Choose the flipType (h) or (v) \n";
+    cin >> flipType;
+    flipImage(flipType);
+    break;
 
+  case 2:
+    adjustDarkeningAndLightening();
+    break;
 
-    case 3:
-      BW();
-      break;
-    
+  case 3:
+    BW();
+    break;
 
-    case 4:
-      InvertImage();
-      break;
+  case 4:
+    InvertImage();
+    break;
 
+  case 5:
+    mer();
+    break;
 
-    case 5:
-      mer();
-      break;
+  case 6:
+    RotateImage();
+    break;
 
+  case 7:
+    chooseQuarter();
+    break;
 
-    case 6:
-      RotateImage();
-      break;
+  case 8:
+    shuffleQuarters();
+    break;
 
-    case 7:
-      chooseQuarter();
-      break;
-
-    case 8:
-      shuffleQuarters();
-      break;
+  case 9:
+    skewImageHorizontally();
+    break;
   }
 }
-
-
-
